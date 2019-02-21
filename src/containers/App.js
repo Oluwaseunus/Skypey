@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../components/Sidebar/index';
+import Sidebar from '../components/Sidebar';
 import Main from '../components/Main';
 import store from '../store';
 import _ from 'lodash';

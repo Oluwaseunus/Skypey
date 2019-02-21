@@ -1,5 +1,5 @@
 import React from 'react';
-import './styles.css';
+import './User.css';
 
 const User = ({ user }) => {
 	const { name, profile_pic, status } = user;
