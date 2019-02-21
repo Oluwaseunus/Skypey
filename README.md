@@ -1,2 +1,0 @@
-# Skypey
-Created with CodeSandbox
