@@ -1,11 +1,16 @@
 import React from 'react';
-import './User.css';
+import store from '../store';
+import { setActiveUserId } from '../actions';
+import './User.scss';
 
 const User = ({ user }) => {
 	const { name, profile_pic, status } = user;
 
 	return (
-		<div className="User">
+		<div
+			className="User"
+			onClick={() => handleUserClick(user)}
+		>
 			<img
 				src={profile_pic}
 				alt={name}
@@ -18,5 +23,9 @@ const User = ({ user }) => {
 		</div>
 	);
 };
+
+function handleUserClick({ user_id }) {
+	store.dispatch(setActiveUserId(user_id));
+}
 
 export default User;

@@ -1,5 +1,19 @@
 @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700');
 
+html {
+	overflow: scroll;
+	overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+	width: 0px;
+	background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #f00;
+}
+
 body {
 	margin: 0;
 	padding: 0;
