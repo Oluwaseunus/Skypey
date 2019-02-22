@@ -1,6 +1,7 @@
 import {
 	SET_TYPING_VALUE,
-	SEND_MESSAGE
+	SEND_MESSAGE,
+	EDIT_MESSAGE
 } from '../constants/action-types';
 
 export default function typing(state = '', action) {

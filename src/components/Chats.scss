@@ -12,6 +12,7 @@
 	margin: 1rem 0;
 	color: #fff;
 	padding: 1rem;
+	position: relative;
 	background: linear-gradient(90deg, #1986d8, #7b9cc2);
 	max-width: 90%;
 	border-top-right-radius: 10px;
@@ -24,6 +25,24 @@
 		border-bottom-right-radius: 0;
 		border-top-left-radius: 10px;
 		border-bottom-left-radius: 10px;
+	}
+
+	&-x {
+		width: 15px;
+		height: 15px;
+		font-size: 10px;
+		text-align: center;
+		border-radius: 50%;
+		background-color: #f00;
+		position: absolute;
+		bottom: 4px;
+		right: 6px;
+		display: none;
+		cursor: pointer;
+	}
+
+	&:hover &-x {
+		display: block;
 	}
 }
 
