@@ -1,60 +1,84 @@
 import React, { Component } from 'react';
 import store from '../store';
-import { editMessage } from '../actions';
+import { editMessage, deleteMessage } from '../actions';
 import './Chats.scss';
 
-const Chat = ({ message }) => {
-	// Stores previous value of editable message.
-	let prevValue = '';
+class Chat extends Component {
+	state = store.getState();
 
-	// Stores state 😅
-	const state = store.getState();
+	componentDidMount = () => this.setEditableRef();
+	componentDidUpdate = () => this.setEditableRef();
 
-	const { text, is_user_msg } = message;
-
-	const handleBlur = e => {
-		const message = e.target.textContent;
-		const { activeUserId, messages } = state;
-		const number = Object.keys(messages[activeUserId]).filter(
-			key => messages[activeUserId][key].text === prevValue
-		);
-		store.dispatch(
-			editMessage(message, activeUserId, number)
-		);
-		prevValue = '';
-	};
-
-	const handleClick = e => {
-		const classes = Array.from(e.target.classList);
-		if (classes.includes('is-user-message')) {
-			prevValue = e.target.textContent;
-			e.target.contentEditable = true;
+	setEditableRef = () => {
+		const { current } = this.spanRef;
+		if (
+			Array.from(current.classList).includes(
+				'is-user-message'
+			)
+		) {
+			current.contentEditable = true;
 		}
 	};
 
-	const handleDelete = e => {
-		console.log(e.target);
-		const { activeUserId, messages } = state;
+	spanRef = React.createRef();
+	prevValue = '';
+
+	removeX = text => text.slice(0, text.length - 1);
+
+	handleBlur = e => {
+		const message = this.removeX(e.target.textContent);
+		const { activeUserId, messages } = this.state;
+		const number = Object.keys(messages[activeUserId]).filter(
+			key =>
+				messages[activeUserId][key].text === this.prevValue
+		)[0];
+		store.dispatch(
+			editMessage(message, activeUserId, number)
+		);
+	};
+
+	handleClick = e => {
+		this.prevValue = this.removeX(e.target.textContent);
+	};
+
+	handleDelete = e => {
+		console.log(
+			this.removeX(e.target.parentNode.textContent)
+		);
+		const { activeUserId, messages } = this.state;
 		const number = Object.keys(messages[activeUserId]).filter(
 			key =>
 				messages[activeUserId][key].text ===
-				e.target.textContent
-		);
+				this.removeX(e.target.parentNode.textContent)
+		)[0];
 		console.log(number);
+		store.dispatch(deleteMessage(activeUserId, number));
 	};
 
-	return (
-		<span
-			onBlur={handleBlur}
-			className={`Chat ${
-				is_user_msg ? 'is-user-message' : ''
-			}`}
-			onClick={handleClick}
-		>
-			{text}
-		</span>
-	);
-};
+	render() {
+		const { text, is_user_msg } = this.props.message;
+
+		return (
+			<span
+				onBlur={this.handleBlur}
+				onClick={this.handleClick}
+				className={`Chat ${
+					is_user_msg ? 'is-user-message' : ''
+				}`}
+				ref={this.spanRef}
+			>
+				{text}
+				<p
+					contentEditable
+					onClick={this.handleDelete}
+					className="Chat-x"
+				>
+					&times;
+				</p>
+			</span>
+		);
+	}
+}
 
 class Chats extends Component {
 	componentDidMount = () => {
