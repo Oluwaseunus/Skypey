@@ -15,11 +15,11 @@ const MessageInput = ({ value }) => {
 	};
 
 	return (
-		<form onSubmit={handleSubmit} className="Message">
+		<form onSubmit={handleSubmit} className='Message'>
 			<input
-				type="text"
-				className="Message__input"
-				placeholder="Write a message..."
+				type='text'
+				className='Message__input'
+				placeholder='Write a message...'
 				onChange={handleChange}
 				value={value}
 			/>
